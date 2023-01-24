@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect } from "react"
+import Divider from "@mui/material/Divider"
 import Button from "@mui/material/Button"
 import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
@@ -11,15 +11,17 @@ import CardContent from "@mui/material/CardContent"
 import Typography from "@mui/material/Typography"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
+import { randomLoadingText } from "../helpers/loading"
+import Chip from "@mui/material/Chip"
+import { Player } from "@lottiefiles/react-lottie-player"
 
 const theme = createTheme()
 
 export default function OpenAI() {
-  const [input, setInput] = useState("")
-  const [output, setOutput] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [input, setInput] = useState<string>("")
+  const [output, setOutput] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value)
@@ -57,13 +59,7 @@ export default function OpenAI() {
       console.error(error)
     }
   }
-  const loadingTextChoices: string[] = [
-    "Loading...",
-    "Doing AI Stuff...",
-    "Working...",
-    "Fetching your result...",
-  ]
-  const randomLoadingText = loadingTextChoices[Math.floor(Math.random() * 4)]
+
   const LoadingText: string = randomLoadingText
 
   return (
@@ -102,6 +98,79 @@ export default function OpenAI() {
         >
           <Box
             sx={{
+              alignItems: "center",
+              justifyContent: "center",
+              display: "flex",
+              mt: 5,
+            }}
+          >
+            <Card
+              sx={{
+                maxWidth: "90%",
+                width: "90%",
+                backgroundColor: "silver",
+              }}
+              variant="outlined"
+              elevation={0}
+            >
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                  fontWeight="300"
+                >
+                  {output.length && !loading ? "OpenAI" : null}
+                  {!output.length && loading ? (
+                    <Player
+                      src="https://assets7.lottiefiles.com/private_files/lf30_ypgvza1p.json"
+                      loop
+                      style={{ height: 80, width: 80 }}
+                      speed={1}
+                      direction={1}
+                      // background="transparent"
+                      autoplay
+                    />
+                  ) : null}
+                  {/* {!output.length && loading ? LoadingText : null} */}
+                  {!output.length && !loading ? "OpenAI" : null}
+                </Typography>
+                <Divider textAlign="center">
+                  {output.length && !loading ? (
+                    <Chip
+                      variant="outlined"
+                      color="primary"
+                      label="Output"
+                      sx={{ fontWeight: "bold", color: "black" }}
+                    />
+                  ) : null}
+                </Divider>
+                <Box sx={{ mt: 2 }}>
+                  {error ? (
+                    <Typography variant="body2" color="text.primary">
+                      There was an error...
+                    </Typography>
+                  ) : (
+                    <Typography variant="body2" color="text.primary">
+                      {output.length ? (
+                        output
+                      ) : (
+                        <p>
+                          Give me a <strong>prompt</strong> and let me do the
+                          rest.
+                        </p>
+                      )}
+                    </Typography>
+                  )}
+                </Box>
+              </CardContent>
+              {/* <CardActions>
+                <Button size="small">Learn More</Button>
+              </CardActions> */}
+            </Card>
+          </Box>
+          <Box
+            sx={{
               my: 8,
               mx: 4,
               display: "flex",
@@ -109,19 +178,37 @@ export default function OpenAI() {
               alignItems: "center",
             }}
           >
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              sx={{
+                mt: 0,
+                position: "absolute",
+                bottom: 0,
+                mb: 5,
+                backgroundColor: "silver",
+                paddingLeft: 10,
+                paddingRight: 10,
+                paddingTop: 1,
+                paddingBottom: 2,
+                borderRadius: 1,
+                border: 1,
+                borderColor: "darkgray",
+              }}
+            >
               <TextField
                 margin="normal"
                 fullWidth
                 id="prompt"
                 label="Prompt"
                 name="prompt"
-                sx={{ backgroundColor: "#dbdbdb", width: 250 }}
+                sx={{ backgroundColor: "silver", width: "100%", mb: 3 }}
                 size="small"
-                variant="standard"
+                variant="outlined"
                 onChange={handleChange}
                 autoComplete="off"
               />
+              {/* <Divider sx={{ mb: 2 }}></Divider> */}
               <Box
                 sx={{
                   display: "flex",
@@ -138,53 +225,10 @@ export default function OpenAI() {
                   size="small"
                   sx={{ mt: 1, mb: 1, width: "50%" }}
                 >
-                  {loading ? "Please wait..." : "Submit"}
+                  {loading ? "Loading" : "Submit"}
                 </Button>
               </Box>
             </Box>
-          </Box>
-          <Box
-            sx={{
-              alignItems: "center",
-              justifyContent: "center",
-              display: "flex",
-            }}
-          >
-            <Card
-              sx={{
-                maxWidth: "90%",
-                width: "90%",
-                backgroundColor: "silver",
-              }}
-              variant="outlined"
-            >
-              <CardContent>
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                  fontWeight="300"
-                >
-                  {output.length && !loading ? "Results" : null}
-                  {!output.length && loading ? LoadingText : null}
-                  {!output.length && !loading ? "OpenAI" : null}
-                </Typography>
-                {error ? (
-                  <Typography variant="body2" color="text.primary">
-                    There was an error...
-                  </Typography>
-                ) : (
-                  <Typography variant="body2" color="text.primary">
-                    {output.length
-                      ? output
-                      : "Results will display here, give the prompt a sentence and OpenAI will finish it for you."}
-                  </Typography>
-                )}
-              </CardContent>
-              {/* <CardActions>
-                <Button size="small">Learn More</Button>
-              </CardActions> */}
-            </Card>
           </Box>
         </Grid>
       </Grid>
