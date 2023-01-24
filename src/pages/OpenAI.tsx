@@ -1,17 +1,12 @@
 import * as React from "react"
-import Divider from "@mui/material/Divider"
 import Button from "@mui/material/Button"
 import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
-import Card from "@mui/material/Card"
-import CardContent from "@mui/material/CardContent"
-import Typography from "@mui/material/Typography"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useState } from "react"
-import { Player } from "@lottiefiles/react-lottie-player"
 import { makeStyles } from "@mui/styles"
 import Snackbar from "@mui/material/Snackbar"
 import IconButton from "@mui/material/IconButton"
@@ -19,6 +14,8 @@ import CloseIcon from "@mui/icons-material/Close"
 import Tooltip from "@mui/material/Tooltip"
 import WbSunnyIcon from "@mui/icons-material/WbSunny"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
+import Background from "../components/Background"
+import OutputCard from "../components/OutputCard"
 
 const theme = createTheme()
 
@@ -97,24 +94,7 @@ export default function OpenAI() {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={5}
-          sx={{
-            backgroundImage:
-              "url(https://images.prismic.io/contrary-research/409112a8-3782-431e-8061-51ce8326bc60_image+%2837%29.png)",
-            // backgroundImage: "url(https://source.unsplash.com/random)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        <Background />
         <Grid
           item
           xs={12}
@@ -137,77 +117,7 @@ export default function OpenAI() {
               mt: 2,
             }}
           >
-            <Card
-              sx={{
-                maxWidth: "90%",
-                width: "90%",
-                backgroundColor: "#f7f7f8",
-                borderColor: "transparent",
-                // borderColor: "#c8c9d5",
-              }}
-              variant="outlined"
-              elevation={0}
-            >
-              <CardContent>
-                {output.length && !loading ? (
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                    fontFamily="Inter"
-                    fontWeight="bold"
-                    fontSize={20}
-                  >
-                    OpenAI
-                  </Typography>
-                ) : null}
-                {!output.length && loading ? (
-                  <Player
-                    src="https://assets8.lottiefiles.com/packages/lf20_4hyyiayl.json"
-                    loop
-                    style={{ height: 100, width: 100 }}
-                    speed={1}
-                    direction={1}
-                    autoplay
-                  />
-                ) : null}
-                {!output.length && !loading ? (
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                    fontWeight="bold"
-                    fontSize={20}
-                    fontFamily="Inter"
-                  >
-                    OpenAI
-                  </Typography>
-                ) : null}
-                <Divider textAlign="center"></Divider>
-                <Box sx={{ mt: 2 }}>
-                  {error ? (
-                    <Typography
-                      variant="body2"
-                      color="text.primary"
-                      fontFamily="Inter"
-                    >
-                      There was an error...
-                    </Typography>
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      color="text.primary"
-                      fontFamily="Inter"
-                    >
-                      {output.length && !loading
-                        ? output
-                        : `Give me a prompt and let me do the
-                          rest.`}
-                    </Typography>
-                  )}
-                </Box>
-              </CardContent>
-            </Card>
+            <OutputCard loading={loading} output={output} error={error} />
           </Box>
           <Box
             sx={{
@@ -240,6 +150,7 @@ export default function OpenAI() {
               }}
             >
               <TextField
+                className={classes.rootInput}
                 margin="normal"
                 fullWidth
                 id="prompt"
@@ -255,7 +166,7 @@ export default function OpenAI() {
                 }}
                 color="warning"
                 size="small"
-                variant="outlined"
+                variant="filled"
                 onChange={handleChange}
                 autoComplete="off"
               />
@@ -332,6 +243,11 @@ const useStyles = makeStyles({
     },
   },
   rootInput: {
-    borderColor: "orange",
+    underline: {
+      "&:hover:not($disabled):before": {
+        backgroundColor: "transparent",
+        height: 1,
+      },
+    },
   },
 })
