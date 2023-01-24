@@ -248,7 +248,8 @@ export default function OpenAI() {
                 paddingBottom: 2,
                 borderRadius: 1,
                 border: 1,
-                borderColor: "#c8c9d5",
+                borderColor: "transparent",
+                // borderColor: "#c8c9d5",
               }}
             >
               <TextField
