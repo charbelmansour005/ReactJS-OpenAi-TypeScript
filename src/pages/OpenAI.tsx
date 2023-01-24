@@ -11,13 +11,14 @@ import CardContent from "@mui/material/CardContent"
 import Typography from "@mui/material/Typography"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useState } from "react"
-import Chip from "@mui/material/Chip"
-import "./OpenAI.css"
 import { Player } from "@lottiefiles/react-lottie-player"
 import { makeStyles } from "@mui/styles"
 import Snackbar from "@mui/material/Snackbar"
 import IconButton from "@mui/material/IconButton"
 import CloseIcon from "@mui/icons-material/Close"
+import Tooltip from "@mui/material/Tooltip"
+import WbSunnyIcon from "@mui/icons-material/WbSunny"
+import DarkModeIcon from "@mui/icons-material/DarkMode"
 
 const theme = createTheme()
 
@@ -90,7 +91,6 @@ export default function OpenAI() {
     }
   }
 
-  // const LoadingText: string = randomLoadingText
   const classes = useStyles()
 
   return (
@@ -104,7 +104,7 @@ export default function OpenAI() {
           md={5}
           sx={{
             backgroundImage:
-              "url(https://openai.com/content/images/2022/05/openai-avatar.png)",
+              "url(https://images.prismic.io/contrary-research/409112a8-3782-431e-8061-51ce8326bc60_image+%2837%29.png)",
             // backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -134,7 +134,7 @@ export default function OpenAI() {
               alignItems: "center",
               justifyContent: "center",
               display: "flex",
-              mt: 5,
+              mt: 2,
             }}
           >
             <Card
@@ -142,8 +142,8 @@ export default function OpenAI() {
                 maxWidth: "90%",
                 width: "90%",
                 backgroundColor: "#f7f7f8",
-                // borderColor: "transparent",
-                borderColor: "#c8c9d5",
+                borderColor: "transparent",
+                // borderColor: "#c8c9d5",
               }}
               variant="outlined"
               elevation={0}
@@ -156,7 +156,7 @@ export default function OpenAI() {
                     component="div"
                     fontFamily="Inter"
                     fontWeight="bold"
-                    fontSize={21}
+                    fontSize={20}
                   >
                     OpenAI
                   </Typography>
@@ -177,28 +177,13 @@ export default function OpenAI() {
                     variant="h5"
                     component="div"
                     fontWeight="bold"
-                    fontSize={21}
+                    fontSize={20}
                     fontFamily="Inter"
-                    // sx={{ color: "#24a37f" }}
                   >
                     OpenAI
                   </Typography>
                 ) : null}
-                <Divider textAlign="center">
-                  {output.length && !loading ? (
-                    <Chip
-                      variant="outlined"
-                      label="Result"
-                      sx={{
-                        fontWeight: "bold",
-                        color: "gray",
-                        backgroundColor: "transparent",
-                        fontFamily: "Inter",
-                        borderRadius: 1,
-                      }}
-                    />
-                  ) : null}
-                </Divider>
+                <Divider textAlign="center"></Divider>
                 <Box sx={{ mt: 2 }}>
                   {error ? (
                     <Typography
@@ -226,8 +211,6 @@ export default function OpenAI() {
           </Box>
           <Box
             sx={{
-              my: 8,
-              mx: 4,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -239,8 +222,10 @@ export default function OpenAI() {
               sx={{
                 mt: 0,
                 position: "absolute",
+                display: "flex",
+                flexDirection: "column",
                 bottom: 0,
-                mb: 5,
+                mb: 3,
                 backgroundColor: "#f7f7f8",
                 paddingLeft: 10,
                 paddingRight: 10,
@@ -248,29 +233,32 @@ export default function OpenAI() {
                 paddingBottom: 2,
                 borderRadius: 1,
                 border: 1,
-                borderColor: "transparent",
-                // borderColor: "#c8c9d5",
+                borderColor: "#c8c9d5",
+                width: 500,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <TextField
                 margin="normal"
                 fullWidth
                 id="prompt"
-                placeholder="An apple a day"
+                multiline={true}
+                rows={4}
+                placeholder="One of the many reasons I prefer driving a Tesla is that"
                 name="prompt"
                 sx={{
                   backgroundColor: "#f7f7f8",
-                  width: 300,
-                  mb: 2.5,
+                  width: 470,
+                  mb: 2,
                   fontFamily: "Inter",
                 }}
-                color="success"
+                color="warning"
                 size="small"
                 variant="outlined"
                 onChange={handleChange}
                 autoComplete="off"
               />
-              <Divider light={false} sx={{ mb: 2 }}></Divider>
               <Box
                 sx={{
                   display: "flex",
@@ -278,31 +266,55 @@ export default function OpenAI() {
                   justifyContent: "center",
                 }}
               >
-                <Button
-                  onClick={handleSubmit2}
-                  fullWidth
-                  variant="contained"
-                  disableElevation
-                  disabled={!input || loading}
-                  size="small"
-                  sx={{
-                    width: "30%",
-                    textTransform: "capitalize",
-                    fontSize: 15,
-                  }}
-                  className={classes.root}
+                <Tooltip
+                  title={
+                    !input ? `Write something first` : `Generate completion`
+                  }
+                  placement="right"
                 >
-                  {loading ? "Loading" : "Submit"}
-                </Button>
+                  <span>
+                    <Button
+                      onClick={handleSubmit2}
+                      fullWidth
+                      variant="contained"
+                      disableElevation
+                      disabled={!input || loading}
+                      size="small"
+                      sx={{
+                        width: "30%",
+                        textTransform: "capitalize",
+                        fontSize: 14,
+                      }}
+                      className={classes.root}
+                    >
+                      Submit
+                    </Button>
+                  </span>
+                </Tooltip>
               </Box>
             </Box>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleClose}
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 1,
+                color: "white",
+                margin: 1,
+              }}
+            >
+              <DarkModeIcon fontSize="small" />
+            </IconButton>
           </Box>
         </Grid>
         <Snackbar
           open={open}
           autoHideDuration={6000}
           onClose={handleClose}
-          message="Output generated"
+          message="Success!"
           action={action}
         />
       </Grid>
@@ -312,7 +324,7 @@ export default function OpenAI() {
 
 const useStyles = makeStyles({
   root: {
-    background: "linear-gradient(45deg, #24a37f 30%, #24a37f 90%)",
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     color: "#fff",
     "&:hover": {
       backgroundColor: "#fff",
