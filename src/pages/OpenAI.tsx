@@ -11,11 +11,13 @@ import CardContent from "@mui/material/CardContent"
 import Typography from "@mui/material/Typography"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useState } from "react"
-import { randomLoadingText } from "../helpers/loading"
 import Chip from "@mui/material/Chip"
 import "./OpenAI.css"
 import { Player } from "@lottiefiles/react-lottie-player"
 import { makeStyles } from "@mui/styles"
+import Snackbar from "@mui/material/Snackbar"
+import IconButton from "@mui/material/IconButton"
+import CloseIcon from "@mui/icons-material/Close"
 
 const theme = createTheme()
 
@@ -24,6 +26,31 @@ export default function OpenAI() {
   const [output, setOutput] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
+  const [open, setOpen] = React.useState(false)
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return
+    }
+
+    setOpen(false)
+  }
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  )
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value)
@@ -55,6 +82,7 @@ export default function OpenAI() {
       const json = await response.json()
       setOutput(json.choices[0].text)
       setLoading(false)
+      setOpen(true)
     } catch (error: any) {
       setLoading(false)
       setError(true)
@@ -121,39 +149,52 @@ export default function OpenAI() {
               elevation={0}
             >
               <CardContent>
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                  fontWeight="300"
-                  fontFamily="Inter"
-                  sx={{ color: "#24a37f" }}
-                >
-                  {output.length && !loading ? "OpenAI" : null}
-                  {!output.length && loading ? (
-                    <Player
-                      src="https://assets7.lottiefiles.com/private_files/lf30_ypgvza1p.json"
-                      loop
-                      style={{ height: 80, width: 80 }}
-                      speed={1}
-                      direction={1}
-                      // background="transparent"
-                      autoplay
-                    />
-                  ) : null}
-                  {/* {!output.length && loading ? LoadingText : null} */}
-                  {!output.length && !loading ? "OpenAI" : null}
-                </Typography>
+                {output.length && !loading ? (
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    fontFamily="Inter"
+                    fontWeight="bold"
+                    fontSize={21}
+                  >
+                    OpenAI
+                  </Typography>
+                ) : null}
+                {!output.length && loading ? (
+                  <Player
+                    src="https://assets8.lottiefiles.com/packages/lf20_4hyyiayl.json"
+                    loop
+                    style={{ height: 100, width: 100 }}
+                    speed={1}
+                    direction={1}
+                    autoplay
+                  />
+                ) : null}
+                {!output.length && !loading ? (
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    fontWeight="bold"
+                    fontSize={21}
+                    fontFamily="Inter"
+                    // sx={{ color: "#24a37f" }}
+                  >
+                    OpenAI
+                  </Typography>
+                ) : null}
                 <Divider textAlign="center">
                   {output.length && !loading ? (
                     <Chip
-                      variant="filled"
-                      label="Output below"
+                      variant="outlined"
+                      label="Result"
                       sx={{
                         fontWeight: "bold",
-                        color: "white",
-                        backgroundColor: "#24a37f",
+                        color: "gray",
+                        backgroundColor: "transparent",
                         fontFamily: "Inter",
+                        borderRadius: 1,
                       }}
                     />
                   ) : null}
@@ -173,7 +214,7 @@ export default function OpenAI() {
                       color="text.primary"
                       fontFamily="Inter"
                     >
-                      {output.length
+                      {output.length && !loading
                         ? output
                         : `Give me a prompt and let me do the
                           rest.`}
@@ -181,9 +222,6 @@ export default function OpenAI() {
                   )}
                 </Box>
               </CardContent>
-              {/* <CardActions>
-                <Button size="small">Learn More</Button>
-              </CardActions> */}
             </Card>
           </Box>
           <Box
@@ -210,7 +248,6 @@ export default function OpenAI() {
                 paddingBottom: 2,
                 borderRadius: 1,
                 border: 1,
-                // borderColor: "transparent",
                 borderColor: "#c8c9d5",
               }}
             >
@@ -218,7 +255,6 @@ export default function OpenAI() {
                 margin="normal"
                 fullWidth
                 id="prompt"
-                label="Prompt"
                 placeholder="An apple a day"
                 name="prompt"
                 sx={{
@@ -227,7 +263,7 @@ export default function OpenAI() {
                   mb: 2.5,
                   fontFamily: "Inter",
                 }}
-                color="secondary"
+                color="success"
                 size="small"
                 variant="outlined"
                 onChange={handleChange}
@@ -249,7 +285,7 @@ export default function OpenAI() {
                   disabled={!input || loading}
                   size="small"
                   sx={{
-                    width: "50%",
+                    width: "30%",
                     textTransform: "capitalize",
                     fontSize: 15,
                   }}
@@ -261,6 +297,13 @@ export default function OpenAI() {
             </Box>
           </Box>
         </Grid>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message="Output generated"
+          action={action}
+        />
       </Grid>
     </ThemeProvider>
   )
