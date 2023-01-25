@@ -1,7 +1,7 @@
 import * as React from "react"
 import Button from "@mui/material/Button"
 import CssBaseline from "@mui/material/CssBaseline"
-import TextField from "@mui/material/TextField"
+import { TextField, Card } from "@mui/material"
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
@@ -81,6 +81,8 @@ export default function OpenAI() {
       setOutput(json.choices[0].text)
       setLoading(false)
       setOpen(true)
+      // const role = "admin"
+      // localStorage.setItem("role", role)
     } catch (error: any) {
       setLoading(false)
       setError(true)
@@ -91,7 +93,7 @@ export default function OpenAI() {
   const classes = useStyles()
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Background />
@@ -104,9 +106,9 @@ export default function OpenAI() {
           elevation={3}
           square
           style={{
-            backgroundColor: "#ffffff",
+            // backgroundColor: "#ffffff",
             borderWidth: 1,
-            borderColor: "black",
+            // borderColor: "black",
           }}
         >
           <Box
@@ -126,8 +128,9 @@ export default function OpenAI() {
               alignItems: "center",
             }}
           >
-            <Box
+            <Card
               component="form"
+              variant="outlined"
               noValidate
               sx={{
                 mt: 0,
@@ -136,15 +139,16 @@ export default function OpenAI() {
                 flexDirection: "column",
                 bottom: 0,
                 mb: 3,
-                backgroundColor: "#f7f7f8",
+                // backgroundColor: "#f7f7f8",
                 paddingLeft: 10,
                 paddingRight: 10,
-                paddingTop: 1,
+                paddingTop: 0,
                 paddingBottom: 2,
                 borderRadius: 1,
                 border: 1,
-                borderColor: "#c8c9d5",
-                width: 500,
+                borderColor: "transparent",
+                // borderColor: "#c8c9d5",
+                width: 400,
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -159,14 +163,14 @@ export default function OpenAI() {
                 placeholder="One of the many reasons I prefer driving a Tesla is that"
                 name="prompt"
                 sx={{
-                  backgroundColor: "#f7f7f8",
-                  width: 470,
+                  // backgroundColor: "#f7f7f8",
+                  width: 380,
                   mb: 2,
                   fontFamily: "Inter",
                 }}
                 color="warning"
                 size="small"
-                variant="filled"
+                variant="standard"
                 onChange={handleChange}
                 autoComplete="off"
               />
@@ -203,7 +207,7 @@ export default function OpenAI() {
                   </span>
                 </Tooltip>
               </Box>
-            </Box>
+            </Card>
             <IconButton
               size="small"
               aria-label="close"
@@ -229,7 +233,7 @@ export default function OpenAI() {
           action={action}
         />
       </Grid>
-    </ThemeProvider>
+    </>
   )
 }
 

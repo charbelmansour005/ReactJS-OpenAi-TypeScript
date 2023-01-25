@@ -13,8 +13,8 @@ function OutputCard({ ...props }: Props) {
       sx={{
         maxWidth: "90%",
         width: "90%",
-        backgroundColor: "#f7f7f8",
-        borderColor: "transparent",
+        // backgroundColor: "#f7f7f8",
+        // borderColor: "transparent",
         // borderColor: "#c8c9d5",
       }}
       variant="outlined"
