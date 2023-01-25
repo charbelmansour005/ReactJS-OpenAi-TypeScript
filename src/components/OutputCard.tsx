@@ -78,10 +78,6 @@ function OutputCard({ ...props }: Props) {
                 fontFamily="Inter"
                 fontSize={14}
               >
-                {/* {props.output.length && !props.loading
-                  ? props.output
-                  : `Give me a prompt and let me do the
-              rest.`} */}
                 {!props.output &&
                   !props.loading &&
                   !props.error &&
@@ -91,9 +87,6 @@ function OutputCard({ ...props }: Props) {
                   ? randomLoadingText
                   : props.output}
               </Typography>
-              //  iza mafi text
-              // w iza mech loading
-              // show Give me a prompt and let me do the rest
             )}
           </Box>
         </CardContent>
