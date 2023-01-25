@@ -16,6 +16,8 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
 import Background from "../components/Background"
 import OutputCard from "../components/OutputCard"
+import { useAppSelector, useAppDispatch } from "../redux/rtkHooks"
+import { toggleTheme } from "../redux/themeSlice"
 
 const theme = createTheme()
 
@@ -25,6 +27,9 @@ export default function OpenAI() {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [open, setOpen] = React.useState(false)
+  const theme = useAppSelector((state) => state.theme)
+  const [mode, setMode] = useState<boolean>(true)
+  const dispatch = useAppDispatch()
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
@@ -91,6 +96,11 @@ export default function OpenAI() {
   }
 
   const classes = useStyles()
+
+  const handleThemeChange = () => {
+    dispatch(toggleTheme())
+    setMode((mode) => !mode)
+  }
 
   return (
     <>
@@ -170,7 +180,7 @@ export default function OpenAI() {
                 }}
                 color="warning"
                 size="small"
-                variant="standard"
+                variant="filled"
                 onChange={handleChange}
                 autoComplete="off"
               />
@@ -212,7 +222,7 @@ export default function OpenAI() {
               size="small"
               aria-label="close"
               color="inherit"
-              onClick={handleClose}
+              onClick={handleThemeChange}
               sx={{
                 position: "absolute",
                 top: 0,
@@ -221,7 +231,11 @@ export default function OpenAI() {
                 margin: 1,
               }}
             >
-              <DarkModeIcon fontSize="small" />
+              {mode ? (
+                <DarkModeIcon fontSize="small" />
+              ) : (
+                <WbSunnyIcon fontSize="small" />
+              )}
             </IconButton>
           </Box>
         </Grid>

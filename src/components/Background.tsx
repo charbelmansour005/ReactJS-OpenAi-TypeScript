@@ -20,6 +20,8 @@ function Background({}: Props) {
               : t.palette.grey[900],
           backgroundSize: "cover",
           backgroundPosition: "center",
+          color: "green",
+          overflow: "hidden",
         }}
       />
     </>
