@@ -1,5 +1,6 @@
 import { Player } from "@lottiefiles/react-lottie-player"
 import { Box, CardContent, Typography, Card, Divider } from "@mui/material"
+import { randomLoadingText } from "../helpers/loading"
 
 type Props = {
   output: string
@@ -75,12 +76,24 @@ function OutputCard({ ...props }: Props) {
                 variant="body2"
                 color="text.primary"
                 fontFamily="Inter"
+                fontSize={14}
               >
-                {props.output.length && !props.loading
+                {/* {props.output.length && !props.loading
                   ? props.output
                   : `Give me a prompt and let me do the
+              rest.`} */}
+                {!props.output &&
+                  !props.loading &&
+                  !props.error &&
+                  `Give me a prompt and let me do the
               rest.`}
+                {!props.output.length && props.loading
+                  ? randomLoadingText
+                  : props.output}
               </Typography>
+              //  iza mafi text
+              // w iza mech loading
+              // show Give me a prompt and let me do the rest
             )}
           </Box>
         </CardContent>

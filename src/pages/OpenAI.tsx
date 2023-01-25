@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Card, Paper, Box, Grid, IconButton, Snackbar } from "@mui/material"
-import { makeStyles } from "@mui/styles"
 import CloseIcon from "@mui/icons-material/Close"
 import WbSunnyIcon from "@mui/icons-material/WbSunny"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
@@ -49,6 +48,10 @@ export default function OpenAI() {
   }
 
   const handleSubmit2 = async (event: any) => {
+    /**
+     * @fetch
+     * axios displaying error behavior working with OpenAI
+     */
     event.preventDefault()
     try {
       setLoading(true)
@@ -81,8 +84,6 @@ export default function OpenAI() {
       console.error(error)
     }
   }
-
-  const classes = useStyles()
 
   const handleThemeChange = () => {
     dispatch(toggleTheme())
@@ -175,22 +176,3 @@ export default function OpenAI() {
     </React.Fragment>
   )
 }
-
-const useStyles = makeStyles({
-  root: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#fff",
-      color: "#fff",
-    },
-  },
-  rootInput: {
-    underline: {
-      "&:hover:not($disabled):before": {
-        backgroundColor: "transparent",
-        height: 1,
-      },
-    },
-  },
-})

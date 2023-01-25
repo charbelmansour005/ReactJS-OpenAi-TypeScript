@@ -24,6 +24,7 @@ function PromptInput({ ...props }: Props) {
           width: 380,
           mb: 2,
           fontFamily: "Inter",
+          fontSize: "14px",
         }}
         color="warning"
         size="small"

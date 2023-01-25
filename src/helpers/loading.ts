@@ -1,8 +1,8 @@
 const loadingTextChoices: string[] = [
   "Loading...",
   "Loading OpenAi result",
-  "Working.",
-  "Fetching your result",
+  "Working",
+  "Fetching result",
 ]
 
 export const randomLoadingText =
