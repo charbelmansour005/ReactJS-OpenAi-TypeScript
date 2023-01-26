@@ -3,8 +3,12 @@ import { createTheme } from "@mui/material"
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
+    primary: {
+      main: "#dbdbdb",
+    },
     background: {
       paper: "#f7f7f8",
+      default: "#dbdbdb",
     },
     text: {
       primary: "#11111",

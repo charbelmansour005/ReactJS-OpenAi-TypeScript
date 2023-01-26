@@ -3,9 +3,11 @@ import { Box, CardContent, Typography, Card, Divider } from "@mui/material"
 import { randomLoadingText } from "../helpers/loading"
 
 type Props = {
-  output: string
+  output: any
   loading: boolean
   error: boolean
+  model: string
+  base: string
 }
 
 function OutputCard({ ...props }: Props) {
@@ -15,16 +17,18 @@ function OutputCard({ ...props }: Props) {
         alignItems: "center",
         justifyContent: "center",
         display: "flex",
-        mt: 2,
+        m: 0.5,
       }}
     >
       <Card
         sx={{
-          maxWidth: "90%",
-          width: "90%",
+          maxWidth: "100%",
+          width: "100%",
+          height: "100%",
+          padding: 2,
         }}
         variant="outlined"
-        elevation={0}
+        // elevation={1}
       >
         <CardContent>
           {props.output.length && !props.loading ? (
@@ -36,7 +40,7 @@ function OutputCard({ ...props }: Props) {
               fontWeight="bold"
               fontSize={20}
             >
-              OpenAI
+              {props.model ? props.model : `davinci`}
             </Typography>
           ) : null}
           {!props.output.length && props.loading ? (
@@ -76,7 +80,13 @@ function OutputCard({ ...props }: Props) {
                 variant="body2"
                 color="text.primary"
                 fontFamily="Inter"
+                whiteSpace="pre-wrap"
                 fontSize={14}
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  overflowWrap: "break-word",
+                }}
               >
                 {!props.output &&
                   !props.loading &&
@@ -85,7 +95,7 @@ function OutputCard({ ...props }: Props) {
               rest.`}
                 {!props.output.length && props.loading
                   ? randomLoadingText
-                  : props.output}
+                  : props.base + props.output}
               </Typography>
             )}
           </Box>

@@ -1,6 +1,7 @@
 import React from "react"
 import { makeStyles } from "@mui/styles"
-import { Box, Tooltip, Button } from "@mui/material"
+import { Box, Tooltip, Button, IconButton } from "@mui/material"
+import SendSharpIcon from "@mui/icons-material/SendSharp"
 
 type Props = {
   input: string
@@ -14,9 +15,11 @@ const PromptButton = ({ ...props }: Props) => {
     <React.Fragment>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          position: "absolute",
+          bottom: 35,
+          right: 30,
+          // alignItems: "center",
+          // justifyContent: "center",
         }}
       >
         <Tooltip
@@ -24,22 +27,22 @@ const PromptButton = ({ ...props }: Props) => {
           placement="right"
         >
           <span>
-            <Button
+            <IconButton
               onClick={props.handleSubmit2}
-              fullWidth
-              variant="contained"
-              disableElevation
+              // fullWidth
+              // variant="contained"
+              // disableElevation
               disabled={!props.input || props.loading}
               size="small"
               sx={{
-                width: "30%",
-                textTransform: "capitalize",
-                fontSize: 14,
+                width: 30,
+                borderRadius: 1,
+                height: 25,
               }}
-              className={classes.root}
+              // className={classes.root}
             >
-              Submit
-            </Button>
+              <SendSharpIcon fontSize="small" />
+            </IconButton>
           </span>
         </Tooltip>
       </Box>
@@ -51,7 +54,7 @@ export default PromptButton
 
 const useStyles = makeStyles({
   root: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    background: "linear-gradient(45deg, #24a37f 30%, #24a37f 90%)",
     color: "#fff",
     "&:hover": {
       backgroundColor: "#fff",

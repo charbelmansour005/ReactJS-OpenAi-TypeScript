@@ -15,20 +15,21 @@ function PromptInput({ ...props }: Props) {
         className={classes.rootInput}
         margin="normal"
         fullWidth
+        // label="prompt"
         id="prompt"
         multiline={true}
         rows={4}
-        placeholder="One of the many reasons I prefer driving a Tesla is that"
+        placeholder="One of the many reasons I prefer driving an electric is "
         name="prompt"
         sx={{
-          width: 380,
+          width: "100%",
           mb: 2,
           fontFamily: "Inter",
           fontSize: "14px",
         }}
         color="warning"
         size="small"
-        variant="filled"
+        variant="outlined"
         onChange={props.handleChange}
         autoComplete="off"
       />

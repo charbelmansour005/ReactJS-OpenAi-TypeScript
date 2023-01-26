@@ -5,6 +5,8 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
 import { useAppDispatch } from "../redux/rtkHooks"
 import { toggleTheme } from "../redux/themeSlice"
+import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone"
+import SendSharpIcon from "@mui/icons-material/SendSharp"
 //cmp
 import Background from "../components/Background"
 import OutputCard from "../components/OutputCard"
@@ -13,7 +15,10 @@ import PromptButton from "../components/PromptButton"
 
 export default function OpenAI() {
   const [input, setInput] = useState<string>("")
-  const [output, setOutput] = useState<string>("")
+  const [output, setOutput] = useState<any>([])
+  const [base, setBase] = useState("")
+  // const [output, setOutput] = useState<string>("")
+  const [model, setModel] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [open, setOpen] = React.useState(false)
@@ -47,16 +52,8 @@ export default function OpenAI() {
     setInput(event.target.value)
   }
 
-  const handleSubmit2 = async (event: any) => {
-    /**
-     * @fetch
-     * axios displaying error behavior working with OpenAI
-     */
-    event.preventDefault()
+  const handleBusinessLogic = async () => {
     try {
-      setLoading(true)
-      setError(false)
-      setOutput("")
       const token = import.meta.env.VITE_XX
       const payload = {
         prompt: input,
@@ -76,13 +73,25 @@ export default function OpenAI() {
       )
       const json = await response.json()
       setOutput(json.choices[0].text)
+      setModel(json.model)
       setLoading(false)
       setOpen(true)
+      setBase(input)
     } catch (error: any) {
       setLoading(false)
       setError(true)
       console.error(error)
     }
+  }
+
+  const handleSubmit2 = async (event: any) => {
+    event.preventDefault()
+    setLoading(true)
+    setError(false)
+    setOutput("")
+    setInput("")
+    // alert(output)
+    handleBusinessLogic()
   }
 
   const handleThemeChange = () => {
@@ -98,7 +107,7 @@ export default function OpenAI() {
           item
           xs={12}
           sm={8}
-          md={7}
+          md={12}
           component={Paper}
           elevation={3}
           square
@@ -106,7 +115,13 @@ export default function OpenAI() {
             borderWidth: 1,
           }}
         >
-          <OutputCard loading={loading} output={output} error={error} />
+          <OutputCard
+            model={model}
+            loading={loading}
+            output={output}
+            error={error}
+            base={base}
+          />
           <Box
             sx={{
               display: "flex",
@@ -116,7 +131,8 @@ export default function OpenAI() {
           >
             <Card
               component="form"
-              variant="outlined"
+              variant="elevation"
+              elevation={1}
               noValidate
               sx={{
                 mt: 0,
@@ -124,7 +140,7 @@ export default function OpenAI() {
                 display: "flex",
                 flexDirection: "column",
                 bottom: 0,
-                mb: 3,
+                mb: 0,
                 paddingLeft: 10,
                 paddingRight: 10,
                 paddingTop: 0,
@@ -132,7 +148,7 @@ export default function OpenAI() {
                 borderRadius: 1,
                 border: 1,
                 borderColor: "transparent",
-                width: 400,
+                width: "100vw",
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -144,6 +160,7 @@ export default function OpenAI() {
                 handleSubmit2={handleSubmit2}
               />
             </Card>
+
             <IconButton
               size="small"
               aria-label="close"
@@ -151,16 +168,16 @@ export default function OpenAI() {
               onClick={handleThemeChange}
               sx={{
                 position: "absolute",
-                top: 0,
-                left: 1,
+                bottom: 60,
+                right: 25,
                 color: "white",
                 margin: 1,
               }}
             >
               {mode ? (
-                <DarkModeIcon fontSize="small" />
+                <DarkModeTwoToneIcon fontSize="small" color="warning" />
               ) : (
-                <WbSunnyIcon fontSize="small" />
+                <WbSunnyIcon fontSize="small" color="warning" />
               )}
             </IconButton>
           </Box>
