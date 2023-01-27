@@ -108,7 +108,7 @@ function OutputCard({ ...props }: Props) {
         <>
           <Box
             sx={{
-              mt: "5%",
+              mt: "1%",
               alignItems: "center",
               justifyContent: "center",
               display: "flex",
