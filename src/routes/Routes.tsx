@@ -1,9 +1,9 @@
 import { useRoutes } from "react-router-dom"
-import OpenAI from "../pages/OpenAI"
+import LandingPage from "../pages/LandingPage"
 
 export const Routes = () => {
   let element = useRoutes([
-    { path: "/", element: <OpenAI /> },
+    { path: "/", element: <LandingPage /> },
     { path: "*", element: <h1>Hmmm.. wrong page</h1> },
   ])
   return <>{element}</>

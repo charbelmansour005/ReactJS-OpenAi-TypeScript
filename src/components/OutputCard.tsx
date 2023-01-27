@@ -1,10 +1,11 @@
 import { Player } from "@lottiefiles/react-lottie-player"
 import { Box, CardContent, Typography, Card, Divider } from "@mui/material"
 import { randomLoadingText } from "../helpers/loading"
-import UITypography from "./UITypography"
-import CapabilitiesTypography from "./CapabilitiesTypography"
-import CapabilitiesCard from "./CapabilitiesCard"
+import UITypography from "./UI/UITypography"
+import CapabilitiesTypography from "./UI/CapabilitiesTypography"
+import CapabilitiesCard from "./UI/CapabilitiesCard"
 import ElectricBoltTwoTone from "@mui/icons-material/ElectricBoltTwoTone"
+import CardLoading from "./Animations/CardLoading"
 
 type Props = {
   output: any
@@ -54,17 +55,8 @@ function OutputCard({ ...props }: Props) {
               </UITypography>
             </div>
           ) : null}
-          {!props.output.length && props.loading ? (
-            <Player
-              src="https://assets3.lottiefiles.com/packages/lf20_E5C0kC.json"
-              loop
-              style={{ height: 100, width: 100 }}
-              speed={1}
-              direction={1}
-              autoplay
-            />
-          ) : null}
-          {!props.output.length && !props.loading ? (
+          {!props.output.length && props.loading && <CardLoading />}
+          {!props.output.length && !props.loading && (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <img
                 style={{
@@ -77,7 +69,7 @@ function OutputCard({ ...props }: Props) {
               />
               <UITypography>OpenAI</UITypography>
             </div>
-          ) : null}
+          )}
           <Divider textAlign="center"></Divider>
           <Box sx={{ mt: 2 }}>
             {props.error ? (

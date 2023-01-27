@@ -19,7 +19,7 @@ import OutputCard from "../components/OutputCard"
 import PromptInput from "../components/PromptInput"
 import PromptButton from "../components/PromptButton"
 
-export default function OpenAI() {
+export default function LandingPage() {
   const [input, setInput] = useState<string>("")
   const [output, setOutput] = useState<any>("")
   const [base, setBase] = useState("")

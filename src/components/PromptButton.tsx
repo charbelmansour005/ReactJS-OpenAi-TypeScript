@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, Tooltip, IconButton } from "@mui/material"
 import SendSharpIcon from "@mui/icons-material/SendSharp"
-import { Player } from "@lottiefiles/react-lottie-player"
+import ButtonLoading from "./Animations/ButtonLoading"
 
 type Props = {
   input: string
@@ -19,19 +19,16 @@ const PromptButton = ({ ...props }: Props) => {
         }}
       >
         <Tooltip
-          title={!props.input ? `Write something first` : `Generate completion`}
+          title={
+            !props.input && !props.loading
+              ? `Write something first`
+              : `Generate completion`
+          }
           placement="right"
         >
           <span>
             {props.loading ? (
-              <Player
-                src="https://assets8.lottiefiles.com/packages/lf20_n20gxdab.json"
-                loop
-                style={{ height: 20, width: 25 }}
-                speed={1}
-                direction={1}
-                autoplay
-              />
+              <ButtonLoading />
             ) : (
               <IconButton
                 onClick={props.handleSubmit2}
