@@ -20,7 +20,7 @@ function PromptInput({ ...props }: Props) {
         id="prompt"
         multiline={true}
         value={props.input}
-        rows={2}
+        rows={4}
         placeholder="Enter your request here"
         name="prompt"
         sx={{
