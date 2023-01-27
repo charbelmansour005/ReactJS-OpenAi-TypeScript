@@ -1,12 +1,18 @@
 import React, { useState } from "react"
-import { Card, Paper, Box, Grid, IconButton, Snackbar } from "@mui/material"
+import {
+  Card,
+  Paper,
+  Box,
+  Grid,
+  IconButton,
+  Snackbar,
+  Alert,
+} from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close"
 import WbSunnyIcon from "@mui/icons-material/WbSunny"
-import DarkModeIcon from "@mui/icons-material/DarkMode"
 import { useAppDispatch } from "../redux/rtkHooks"
 import { toggleTheme } from "../redux/themeSlice"
 import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone"
-import SendSharpIcon from "@mui/icons-material/SendSharp"
 //cmp
 import Background from "../components/Background"
 import OutputCard from "../components/OutputCard"
@@ -15,16 +21,16 @@ import PromptButton from "../components/PromptButton"
 
 export default function OpenAI() {
   const [input, setInput] = useState<string>("")
-  const [output, setOutput] = useState<any>([])
+  const [output, setOutput] = useState<any>("")
   const [base, setBase] = useState("")
   // const [output, setOutput] = useState<string>("")
   const [model, setModel] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [open, setOpen] = React.useState(false)
-  const [mode, setMode] = useState<boolean>(true)
+  const [mode, setMode] = useState<boolean>(false)
   const dispatch = useAppDispatch()
-
+  //#171718
   const handleClose = (
     event: React.SyntheticEvent | Event,
     reason?: string
@@ -90,7 +96,6 @@ export default function OpenAI() {
     setError(false)
     setOutput("")
     setInput("")
-    // alert(output)
     handleBusinessLogic()
   }
 
@@ -105,9 +110,9 @@ export default function OpenAI() {
         <Background />
         <Grid
           item
-          xs={12}
-          sm={8}
-          md={12}
+          xs={true}
+          sm={true}
+          md={true}
           component={Paper}
           elevation={3}
           square
@@ -151,9 +156,10 @@ export default function OpenAI() {
                 width: "100vw",
                 justifyContent: "center",
                 alignItems: "center",
+                // backgroundColor:'#202123'
               }}
             >
-              <PromptInput handleChange={handleChange} />
+              <PromptInput handleChange={handleChange} input={input} />
               <PromptButton
                 input={input}
                 loading={loading}
@@ -188,7 +194,16 @@ export default function OpenAI() {
           onClose={handleClose}
           message="Success!"
           action={action}
-        />
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Fetched data successfully!
+          </Alert>
+        </Snackbar>
       </Grid>
     </React.Fragment>
   )
