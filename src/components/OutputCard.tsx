@@ -55,8 +55,8 @@ function OutputCard({ ...props }: Props) {
               </UITypography>
             </div>
           ) : null}
-          {!props.output.length && props.loading && <CardLoading />}
-          {!props.output.length && !props.loading && (
+          {/* {!props.output.length && props.loading && <CardLoading />} */}
+          {!props.output.length && (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <img
                 style={{
@@ -81,25 +81,57 @@ function OutputCard({ ...props }: Props) {
                 There was an error...
               </Typography>
             ) : (
-              <Typography
-                variant="body2"
-                color="text.primary"
-                fontFamily="Inter"
-                fontSize={14}
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  overflowWrap: "break-word",
-                }}
-              >
+              <>
                 {!props.output &&
                   !props.loading &&
                   !props.error &&
                   `Unlock endless possibilities with the powerful OpenAI Davinci Engine language model`}
-                {!props.output.length && props.loading
-                  ? randomLoadingText
-                  : props.base + props.output}
-              </Typography>
+                {!props.output.length && props.loading ? (
+                  <Typography
+                    variant="body2"
+                    color="text.primary"
+                    fontFamily="Inter"
+                    fontSize={14}
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      overflowWrap: "break-word",
+                    }}
+                  >
+                    {randomLoadingText}
+                  </Typography>
+                ) : (
+                  <>
+                    <Typography
+                      variant="body2"
+                      color="text.primary"
+                      fontFamily="Inter"
+                      fontSize={14}
+                      sx={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        overflowWrap: "break-word",
+                      }}
+                    >
+                      {props.base}
+                    </Typography>
+                    <Divider sx={{ mb: 2, mt: 2 }} textAlign="center"></Divider>
+                    <Typography
+                      variant="body2"
+                      color="text.primary"
+                      fontFamily="Inter"
+                      fontSize={14}
+                      sx={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        overflowWrap: "break-word",
+                      }}
+                    >
+                      {props.output}
+                    </Typography>
+                  </>
+                )}
+              </>
             )}
           </Box>
         </CardContent>
