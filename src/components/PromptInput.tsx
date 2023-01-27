@@ -4,6 +4,7 @@ import { TextField } from "@mui/material"
 
 type Props = {
   handleChange: (args?: any) => void
+  input: string
 }
 
 function PromptInput({ ...props }: Props) {
@@ -18,8 +19,9 @@ function PromptInput({ ...props }: Props) {
         // label="prompt"
         id="prompt"
         multiline={true}
-        rows={4}
-        placeholder="One of the many reasons I prefer driving an electric is "
+        value={props.input}
+        rows={2}
+        placeholder="Enter your request here"
         name="prompt"
         sx={{
           width: "100%",
