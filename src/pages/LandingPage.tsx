@@ -14,10 +14,10 @@ import { useAppDispatch } from "../redux/rtkHooks"
 import { toggleTheme } from "../redux/themeSlice"
 import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone"
 //cmp
-import Background from "../components/Background"
 import OutputCard from "../components/OutputCard"
 import PromptInput from "../components/PromptInput"
 import PromptButton from "../components/PromptButton"
+import TemporaryDrawer from "../components/TemporaryDrawer"
 
 export default function LandingPage() {
   const [input, setInput] = useState<string>("")
@@ -107,7 +107,7 @@ export default function LandingPage() {
   return (
     <React.Fragment>
       <Grid container component="main" sx={{ height: "100vh" }}>
-        <Background />
+        {/* <Background /> */}
         <Grid
           item
           xs={true}
@@ -120,6 +120,7 @@ export default function LandingPage() {
             borderWidth: 1,
           }}
         >
+          <TemporaryDrawer setInput={setInput} />
           <OutputCard
             model={model}
             loading={loading}
@@ -190,7 +191,7 @@ export default function LandingPage() {
         </Grid>
         <Snackbar
           open={open}
-          autoHideDuration={6000}
+          autoHideDuration={2000}
           onClose={handleClose}
           message="Success!"
           action={action}
