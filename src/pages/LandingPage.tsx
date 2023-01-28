@@ -14,7 +14,7 @@ import { useAppDispatch } from "../redux/rtkHooks"
 import { toggleTheme } from "../redux/themeSlice"
 import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone"
 //cmp
-import OutputCard from "../components/OutputCard"
+import OutputCardV2 from "../components/OutputCardV2"
 import PromptInput from "../components/PromptInput"
 import PromptButton from "../components/PromptButton"
 import TemporaryDrawer from "../components/TemporaryDrawer"
@@ -23,7 +23,6 @@ export default function LandingPage() {
   const [input, setInput] = useState<string>("")
   const [output, setOutput] = useState<any>("")
   const [base, setBase] = useState("")
-  // const [output, setOutput] = useState<string>("")
   const [model, setModel] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
@@ -60,6 +59,7 @@ export default function LandingPage() {
 
   const handleBusinessLogic = async () => {
     try {
+      setBase(input)
       const token = import.meta.env.VITE_XX
       const payload = {
         prompt: input,
@@ -82,7 +82,6 @@ export default function LandingPage() {
       setModel(json.model)
       setLoading(false)
       setOpen(true)
-      setBase(input)
     } catch (error: any) {
       setLoading(false)
       setError(true)
@@ -121,7 +120,7 @@ export default function LandingPage() {
           }}
         >
           <TemporaryDrawer setInput={setInput} />
-          <OutputCard
+          <OutputCardV2
             model={model}
             loading={loading}
             output={output}
@@ -175,8 +174,8 @@ export default function LandingPage() {
               onClick={handleThemeChange}
               sx={{
                 position: "absolute",
-                bottom: 60,
-                right: 25,
+                top: 1,
+                right: 5,
                 color: "white",
                 margin: 1,
               }}
