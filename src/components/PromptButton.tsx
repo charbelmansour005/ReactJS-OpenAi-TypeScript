@@ -20,11 +20,9 @@ const PromptButton = ({ ...props }: Props) => {
       >
         <Tooltip
           title={
-            !props.input && !props.loading
-              ? `Write something first`
-              : `Generate completion`
+            !props.input && !props.loading ? `Write something first` : `Submit`
           }
-          placement="right"
+          placement="top"
         >
           <span>
             {props.loading ? (
