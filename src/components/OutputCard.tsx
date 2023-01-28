@@ -25,83 +25,73 @@ function OutputCard({ ...props }: Props) {
         justifyContent: "center",
         display: "flex",
         flexDirection: "column",
-        m: 1,
+        m: 2,
       }}
     >
-      <Card
-        sx={{
-          maxWidth: "100%",
-          width: "100%",
-          height: "100%",
-          padding: 0,
-        }}
-        variant="outlined"
-        elevation={0}
-      >
-        <CardContent>
-          {props.output.length && !props.loading ? (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <img
-                style={{
-                  height: 25,
-                  width: 25,
-                  borderRadius: 3,
-                  marginRight: 15,
-                }}
-                src={imageURL}
-              />
-              <UITypography>
-                {props.model ? props.model : `davinci`}
-              </UITypography>
-            </div>
-          ) : null}
-          {/* {!props.output.length && props.loading && <CardLoading />} */}
-          {!props.output.length && (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <img
-                style={{
-                  height: 25,
-                  width: 25,
-                  borderRadius: 3,
-                  marginRight: 15,
-                }}
-                src={imageURL}
-              />
-              <UITypography>OpenAI</UITypography>
-            </div>
-          )}
-          <Divider textAlign="center"></Divider>
-          <Box sx={{ mt: 2 }}>
-            {props.error ? (
-              <Typography
-                variant="body2"
-                color="text.primary"
-                fontFamily="Inter"
-              >
+      {props.error && (
+        <Card
+          sx={{
+            maxWidth: "100%",
+            width: "100%",
+            height: "100%",
+            padding: 0,
+          }}
+          variant="outlined"
+          elevation={0}
+        >
+          <CardContent>
+            <Box sx={{ mt: 1 }}>
+              <CapabilitiesTypography>
                 There was an error...
-              </Typography>
-            ) : (
-              <>
-                {!props.output &&
-                  !props.loading &&
-                  !props.error &&
-                  `Unlock endless possibilities with the powerful OpenAI Davinci Engine language model`}
-                {!props.output.length && props.loading ? (
-                  <Typography
-                    variant="body2"
-                    color="text.primary"
-                    fontFamily="Inter"
-                    fontSize={14}
-                    sx={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      overflowWrap: "break-word",
-                    }}
-                  >
-                    {randomLoadingText}
-                  </Typography>
-                ) : (
-                  <>
+              </CapabilitiesTypography>
+            </Box>
+          </CardContent>
+        </Card>
+      )}
+      {props.loading && (
+        <Card
+          sx={{
+            maxWidth: "100%",
+            width: "100%",
+            height: "100%",
+            padding: 0,
+          }}
+          variant="outlined"
+          elevation={0}
+        >
+          <CardContent>
+            <Box sx={{ mt: 1 }}>
+              <CapabilitiesTypography>
+                {randomLoadingText}
+              </CapabilitiesTypography>
+            </Box>
+          </CardContent>
+        </Card>
+      )}
+      {props.output && (
+        <Card
+          sx={{
+            maxWidth: "100%",
+            width: "100%",
+            height: "100%",
+            padding: 0,
+          }}
+          variant="outlined"
+          elevation={0}
+        >
+          <CardContent>
+            <Box sx={{ mt: 1 }}>
+              {props.error ? (
+                <Typography
+                  variant="body2"
+                  color="text.primary"
+                  fontFamily="Inter"
+                >
+                  There was an error...
+                </Typography>
+              ) : (
+                <>
+                  {!props.output.length && props.loading ? (
                     <Typography
                       variant="body2"
                       color="text.primary"
@@ -113,29 +103,65 @@ function OutputCard({ ...props }: Props) {
                         overflowWrap: "break-word",
                       }}
                     >
-                      {props.base}
+                      {randomLoadingText}
                     </Typography>
-                    <Divider sx={{ mb: 2, mt: 2 }} textAlign="center"></Divider>
-                    <Typography
-                      variant="body2"
-                      color="text.primary"
-                      fontFamily="Inter"
-                      fontSize={14}
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        overflowWrap: "break-word",
-                      }}
-                    >
-                      {props.output}
-                    </Typography>
-                  </>
-                )}
-              </>
-            )}
-          </Box>
-        </CardContent>
-      </Card>
+                  ) : (
+                    <>
+                      <Typography
+                        variant="body2"
+                        color="text.primary"
+                        fontFamily="Inter"
+                        fontSize={14}
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          overflowWrap: "break-word",
+                        }}
+                      >
+                        {props.base}
+                      </Typography>
+                      {props.output && (
+                        <>
+                          <Divider
+                            sx={{ mb: 2, mt: 2 }}
+                            textAlign="center"
+                          ></Divider>
+                          <div
+                            style={{ display: "flex", flexDirection: "row" }}
+                          >
+                            <img
+                              style={{
+                                height: 25,
+                                width: 25,
+                                borderRadius: 3,
+                                marginRight: 15,
+                              }}
+                              src={imageURL}
+                            />
+                            <Typography
+                              variant="body2"
+                              color="text.primary"
+                              fontFamily="Inter"
+                              fontSize={14}
+                              sx={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                overflowWrap: "break-word",
+                              }}
+                            >
+                              {props.output}
+                            </Typography>
+                          </div>
+                        </>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </Box>
+          </CardContent>
+        </Card>
+      )}
       {!props.output && !props.loading && (
         <>
           <Box
