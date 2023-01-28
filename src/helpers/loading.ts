@@ -1,7 +1,7 @@
 const loadingTextChoices: string[] = [
   "Loading...",
-  "Loading OpenAi result",
-  "Working",
+  "Loading result",
+  "Working...",
   "Fetching result",
 ]
 
