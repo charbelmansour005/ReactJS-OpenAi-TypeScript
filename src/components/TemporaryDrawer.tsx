@@ -104,10 +104,10 @@ export default function TemporaryDrawer({ ...props }: Props) {
     <div>
       <React.Fragment>
         <IconButton
-          sx={{ position: "absolute", bottom: 160, left: 5 }}
+          sx={{ position: "absolute", top: 1, left: 5, m: 0.2 }}
           onClick={toggleDrawer("left", true)}
         >
-          <NavigateNextIcon />
+          <NavigateNextIcon fontSize="small" />
         </IconButton>
         <Drawer
           anchor={"left"}
